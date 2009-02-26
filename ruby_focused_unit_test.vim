@@ -10,6 +10,11 @@ class FocusedRubyUnitTest
     @file_name = VIM::Buffer.current.name
     @line_number = VIM::Buffer.current.line_number 
 
+    if @file_name =~ /spec/
+      VIM::command("!spec #{@file_name} -l #{@line_number}")
+      return
+    end
+
     lines = File.read(@file_name).split("\n")
 
     method_name = nil
@@ -18,7 +23,7 @@ class FocusedRubyUnitTest
       if lines[line_number] =~ /def (test_\w+)/ 
         method_name = $1
         break
-      elsif lines[line_number] =~ /test "(\w+)"/ 
+      elsif lines[line_number] =~ /test "([\w\s]+)"/ 
         method_name = "test_" + $1.split(" ").join("_")
         break
       end
