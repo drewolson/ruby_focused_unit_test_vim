@@ -1,11 +1,11 @@
-command RunFocusedRubyUnitTest :call <SID>RunFocusedRubyUnitTest()
+command RunRubyFocusedUnitTest :call <SID>RunRubyFocusedUnitTest()
 
-function! s:RunFocusedRubyUnitTest()
-  ruby FocusedRubyUnitTest.new.run_test
+function! s:RunRubyFocusedUnitTest()
+  ruby RubyFocusedUnitTest.new.run_test
 endfunction
 
 ruby << EOF
-class FocusedRubyUnitTest
+class RubyFocusedUnitTest
   def run_test
     @file_name = VIM::Buffer.current.name
     @line_number = VIM::Buffer.current.line_number 
