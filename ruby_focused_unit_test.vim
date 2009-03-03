@@ -1,4 +1,5 @@
 command RunRubyFocusedUnitTest :call <SID>RunRubyFocusedUnitTest()
+command RunAllRubyTests :call <SID>RunAllRubyTests()
 
 function! s:RunRubyFocusedUnitTest()
   ruby RubyTestRunner.new.run_test
