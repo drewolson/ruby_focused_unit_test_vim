@@ -72,9 +72,6 @@ class RubyFocusedUnitTest
       rescue EOFError
       end
     end
-
-    VIM::Buffer.create DEFAULT_OUTPUT_BUFFER, :location => :below, :text => test_output
-    VIM::command("setlocal buftype=nowrite")
   end
 
   def current_file
