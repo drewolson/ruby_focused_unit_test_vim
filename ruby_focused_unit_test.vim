@@ -81,8 +81,13 @@ class RubyFocusedUnitTest
       if VIM::Buffer.current[line_number] =~ /def (test_\w+)/ 
         method_name = $1
         break
-      elsif VIM::Buffer.current[line_number] =~ /test ("|')([^"']+)("|')/ 
-        method_name = "test_" + $2.split(" ").join("_")
+      elsif VIM::Buffer.current[line_number] =~ /test "([^"]+)"/ ||
+            VIM::Buffer.current[line_number] =~ /test '([^']+)'/ 
+        method_name = "test_" + $1.split(" ").join("_")
+        break
+      elsif VIM::Buffer.current[line_number] =~ /should "([^"]+)"/ ||
+            VIM::Buffer.current[line_number] =~ /should '([^']+)'/ 
+        method_name = "\"/#{$1}/\""
         break
       end
     end
@@ -103,4 +108,3 @@ class RubyFocusedUnitTest
   end
 end
 EOF
-
