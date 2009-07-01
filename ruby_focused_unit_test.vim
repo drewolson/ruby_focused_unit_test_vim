@@ -83,7 +83,7 @@ class RubyFocusedUnitTest
   end
 
   def run_spec
-    write_output_to_buffer("spec #{current_file} -l #{line_number}")
+    write_output_to_buffer("spec #{current_file} -l #{line_number} &2>1")
   end
 
   def run_unit_test
@@ -104,7 +104,7 @@ class RubyFocusedUnitTest
       end
     end
 
-    write_output_to_buffer("ruby #{current_file} -n #{method_name}") if method_name
+    write_output_to_buffer("ruby #{current_file} -n #{method_name} &2>1") if method_name
   end
 
   def run_test
