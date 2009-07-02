@@ -60,7 +60,7 @@ class RubyFocusedUnitTest
     VIM.command("setlocal buftype=nowrite")
     VIM.command "redraw"
 
-    IO.popen(test_command, "r") do |io|
+    IO.popen("#{test_command} 2>&1", "r") do |io|
       begin
         loop do
           input = io.readpartial(10)
@@ -76,6 +76,10 @@ class RubyFocusedUnitTest
 
   def current_file
     VIM::Buffer.current.name
+  end
+
+  def spec_file?
+    current_file =~ /spec_|_spec/
   end
 
   def line_number
@@ -108,7 +112,7 @@ class RubyFocusedUnitTest
   end
 
   def run_test
-    if current_file =~ /spec_|_spec/
+    if spec_file?
       run_spec
     else
       run_unit_test
@@ -116,7 +120,11 @@ class RubyFocusedUnitTest
   end
 
   def run_all
-    write_output_to_buffer("ruby #{current_file}")
+    if spec_file?
+      write_output_to_buffer("spec #{current_file}")
+    else
+      write_output_to_buffer("ruby #{current_file}")
+    end
   end
 end
 EOF
