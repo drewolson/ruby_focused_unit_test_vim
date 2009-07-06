@@ -3,10 +3,15 @@ if !has("ruby")
 end
 
 command RunRubyFocusedUnitTest :call <SID>RunRubyFocusedUnitTest()
+command RunRubyFocusedContext :call <SID>RunRubyFocusedContext()
 command RunAllRubyTests :call <SID>RunAllRubyTests()
 
 function! s:RunRubyFocusedUnitTest()
   ruby RubyFocusedUnitTest.new.run_test
+endfunction
+
+function! s:RunRubyFocusedContext()
+  ruby RubyFocusedUnitTest.new.run_context
 endfunction
 
 function! s:RunAllRubyTests()
@@ -93,7 +98,7 @@ class RubyFocusedUnitTest
   def run_unit_test
     method_name = nil
 
-    (line_number + 1).downto(0) do |line_number|
+    (line_number + 1).downto(1) do |line_number|
       if VIM::Buffer.current[line_number] =~ /def (test_\w+)/ 
         method_name = $1
         break
@@ -103,7 +108,7 @@ class RubyFocusedUnitTest
         break
       elsif VIM::Buffer.current[line_number] =~ /should "([^"]+)"/ ||
             VIM::Buffer.current[line_number] =~ /should '([^']+)'/ 
-        method_name = "\"/#{$1}/\""
+        method_name = "\"/#{Regexp.escape($1)}/\""
         break
       end
     end
@@ -116,6 +121,29 @@ class RubyFocusedUnitTest
       run_spec
     else
       run_unit_test
+    end
+  end
+
+  def run_context
+    method_name = nil
+    context_line_number = nil
+
+    (line_number + 1).downto(1) do |line_number|
+      if VIM::Buffer.current[line_number] =~ /context "([^"]+)"/ ||
+         VIM::Buffer.current[line_number] =~ /context '([^']+)'/ 
+        method_name = $1
+        context_line_number = line_number
+        break
+      end
+    end
+
+    if method_name
+      if spec_file?
+        write_output_to_buffer("spec #{current_file} -l #{context_line_number}")
+      else
+        method_name = "\"/#{Regexp.escape(method_name)}/\""
+        write_output_to_buffer("ruby #{current_file} -n #{method_name}")
+      end
     end
   end
 
