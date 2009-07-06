@@ -1,18 +1,25 @@
 WHAT?
 
-This vim plugin allows you to run the test/spec that your cursor currently 
-sits on, and ONLY that test/spec. It will ignore all other tests/specs in 
-the current file.
+- Run the test/spec your cursor is currently on
+- Run the context your cursor is currently in
+- Run the entire test/spec you are working in
+- Streaming output to a new buffer
 
 This plugin currently supports
   - test/unit
   - dust
   - rspec
+  - shoulda
 
 HOW?
 
-Simply place your cursor within the test/spec you want to run and execute
-:RunRubyFocusedUnitTest. Feel free to map this command for convenience. 
+Use any of the commands below. Map them to shortcuts
+in your .vimrc for easy access.
+
+- commands
+  - RunRubyFocusedUnitTest - run focused test/spec
+  - RunRubyFocusedContext - run current context (rspec, shoulda)
+  - RunAllRubyTests - run all the tests/specs in the current file
 
 INSTALL
 
