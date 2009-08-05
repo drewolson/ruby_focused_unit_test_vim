@@ -129,9 +129,9 @@ class RubyFocusedUnitTest
     context_line_number = nil
 
     (line_number + 1).downto(1) do |line_number|
-      if VIM::Buffer.current[line_number] =~ /context "([^"]+)"/ ||
-         VIM::Buffer.current[line_number] =~ /context '([^']+)'/ 
-        method_name = $1
+      if VIM::Buffer.current[line_number] =~ /(context|describe) "([^"]+)"/ ||
+         VIM::Buffer.current[line_number] =~ /(context|describe) '([^']+)'/ 
+        method_name = $2
         context_line_number = line_number
         break
       end
