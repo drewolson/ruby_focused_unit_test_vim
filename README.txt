@@ -20,6 +20,8 @@ in your .vimrc for easy access.
   - RunRubyFocusedUnitTest - run focused test/spec
   - RunRubyFocusedContext - run current context (rspec, shoulda)
   - RunAllRubyTests - run all the tests/specs in the current file
+  - RunLastRubyTest - run last command again. this means you don't have to
+    return to your spec/test file to run the last spec/test again.
 
 INSTALL
 
