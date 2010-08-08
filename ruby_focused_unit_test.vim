@@ -104,7 +104,7 @@ class RubyFocusedUnitTest
   end
 
   def run_spec
-    write_output_to_buffer("spec #{current_file} -l #{line_number}")
+    write_output_to_buffer("#{spec_command} #{current_file} -l #{line_number}")
   end
 
   def run_unit_test
@@ -151,7 +151,7 @@ class RubyFocusedUnitTest
 
     if method_name
       if spec_file?
-        write_output_to_buffer("spec #{current_file} -l #{context_line_number}")
+        write_output_to_buffer("#{spec_command} #{current_file} -l #{context_line_number}")
       else
         method_name = "\"/#{Regexp.escape(method_name)}/\""
         write_output_to_buffer("ruby #{current_file} -n #{method_name}")
@@ -161,7 +161,7 @@ class RubyFocusedUnitTest
 
   def run_all
     if spec_file?
-      write_output_to_buffer("spec #{current_file}")
+      write_output_to_buffer("#{spec_command} #{current_file}")
     else
       write_output_to_buffer("ruby #{current_file}")
     end
@@ -169,6 +169,10 @@ class RubyFocusedUnitTest
 
   def run_last
     write_output_to_buffer(File.read(SAVED_TEST_COMMAND_FILE))
+  end
+
+  def spec_command
+    system("which rspec") ? "rspec --no-color" : "spec"
   end
 end
 EOF
