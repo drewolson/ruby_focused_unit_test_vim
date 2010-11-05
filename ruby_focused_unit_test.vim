@@ -36,7 +36,7 @@ module VIM
       end
 
       def create(name, opts={})
-        location = opts[:location] || :below
+        location = opts[:location] || :bot
         VIM.command("#{location} new #{name}")
         buf = VIM::Buffer.current
         if opts[:text]
@@ -69,7 +69,7 @@ class RubyFocusedUnitTest
       buffer.bdelete! 
     end
 
-    buffer = VIM::Buffer.create DEFAULT_OUTPUT_BUFFER, :location => :below, :text => "--- Run Focused Unit Test ---\n\n"
+    buffer = VIM::Buffer.create DEFAULT_OUTPUT_BUFFER, :location => :bot, :text => "--- Run Focused Unit Test ---\n\n"
     VIM.command("setlocal buftype=nowrite")
     VIM.command "redraw"
 
