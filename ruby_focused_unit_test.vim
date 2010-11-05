@@ -172,7 +172,7 @@ class RubyFocusedUnitTest
   end
 
   def spec_command
-    system("which rspec") ? "rspec --no-color" : "spec"
+    system("which rspec 2>/dev/null") ? "rspec --no-color" : "spec"
   end
 end
 EOF
