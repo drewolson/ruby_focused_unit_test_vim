@@ -25,7 +25,7 @@ in your .vimrc for easy access.
 
 INSTALL
 
-Just copy ruby_focused_unit_test.vim into ~/.vim/plugin. That's it!
+Just copy plugin/ruby_focused_unit_test.vim into ~/.vim/plugin. That's it!
 
 REQUIREMENTS
 
