@@ -66,7 +66,7 @@ class RubyFocusedUnitTest
     save_test_command(test_command)
 
     if buffer = VIM::Buffer.find { |b| b.name =~ /#{DEFAULT_OUTPUT_BUFFER}/ }
-      buffer.bdelete! 
+      buffer.bdelete!
     end
 
     buffer = VIM::Buffer.create DEFAULT_OUTPUT_BUFFER, :location => :below, :text => "--- Run Focused Unit Test ---\n\n"
@@ -100,7 +100,7 @@ class RubyFocusedUnitTest
   end
 
   def line_number
-    VIM::Buffer.current.line_number 
+    VIM::Buffer.current.line_number
   end
 
   def run_spec
@@ -111,15 +111,15 @@ class RubyFocusedUnitTest
     method_name = nil
 
     (line_number + 1).downto(1) do |line_number|
-      if VIM::Buffer.current[line_number] =~ /def (test_\w+)/ 
+      if VIM::Buffer.current[line_number] =~ /def (test_\w+)/
         method_name = $1
         break
       elsif VIM::Buffer.current[line_number] =~ /test "([^"]+)"/ ||
-            VIM::Buffer.current[line_number] =~ /test '([^']+)'/ 
+            VIM::Buffer.current[line_number] =~ /test '([^']+)'/
         method_name = "test_" + $1.split(" ").join("_")
         break
       elsif VIM::Buffer.current[line_number] =~ /should "([^"]+)"/ ||
-            VIM::Buffer.current[line_number] =~ /should '([^']+)'/ 
+            VIM::Buffer.current[line_number] =~ /should '([^']+)'/
         method_name = "\"/#{Regexp.escape($1)}/\""
         break
       end
@@ -142,7 +142,7 @@ class RubyFocusedUnitTest
 
     (line_number + 1).downto(1) do |line_number|
       if VIM::Buffer.current[line_number] =~ /(context|describe) "([^"]+)"/ ||
-         VIM::Buffer.current[line_number] =~ /(context|describe) '([^']+)'/ 
+         VIM::Buffer.current[line_number] =~ /(context|describe) '([^']+)'/
         method_name = $2
         context_line_number = line_number
         break
@@ -172,7 +172,7 @@ class RubyFocusedUnitTest
   end
 
   def spec_command
-    system("which rspec 2>/dev/null") ? "rspec --no-color" : "spec"
+    system("which rspec > /dev/null 2>&1") ? "rspec --no-color" : "spec"
   end
 end
 EOF
