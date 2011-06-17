@@ -104,7 +104,7 @@ class RubyFocusedUnitTest
   end
 
   def run_spec
-    write_output_to_buffer("#{spec_command} #{current_file} -l #{line_number}")
+    write_output_to_buffer("#{spec_command} '#{current_file}' -l #{line_number}")
   end
 
   def run_unit_test
@@ -161,9 +161,9 @@ class RubyFocusedUnitTest
 
   def run_all
     if spec_file?
-      write_output_to_buffer("#{spec_command} #{current_file}")
+      write_output_to_buffer("#{spec_command} '#{current_file}'")
     else
-      write_output_to_buffer("ruby #{current_file}")
+      write_output_to_buffer("ruby '#{current_file}'")
     end
   end
 
